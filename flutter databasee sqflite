@@ -1,0 +1,94 @@
+import 'package:flutter/material.dart';
+void main() => runApp(App());
+
+class App extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter database SQFLITE',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('6SIA1'),
+        ),
+        body: Barang(),
+      ),
+    );
+  }
+}
+
+class DataBarang{
+  String kode_brg;
+  String nama_brg;
+  String jlh_brg;
+  String harga_barang;
+  
+  
+  DataBarang({this.kode_brg, this.nama_brg, this.jlh_brg, this.harga_barang});
+  
+}
+
+// class Barang
+class Barang extends StatefulWidget {
+  _MyappState createState() => _MyappState();
+}
+
+class _MyappState extends State<Barang> {
+  //deklarasi variabel
+  final txtkode_brg = TextEditingController();
+  final txtnama_brg = TextEditingController();
+  final txtjlh_brg = TextEditingController();
+  final txtharga_barang = TextEditingController();
+  
+
+  List<Widget> data = [];
+
+  onTambah() {
+    setState(() {
+      data.add(ListTile(
+        leading: Text(txtkode_brg.text),
+        title: Text(txtnama_brg.text),
+        subtitle: Text(txtjlh_brg.text),
+        trailing: Text(txtharga_barang.text),
+      ));
+      txtkode_brg.clear();
+      txtnama_brg.clear();
+      txtjlh_brg.clear();
+      txtharga_barang.clear();
+    });
+  }
+
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        new Container(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+               TextField(
+                controller: txtkode_brg,
+                decoration: InputDecoration(hintText: 'Kode Barang'),
+              ),
+              TextField(
+                controller: txtnama_brg,
+                decoration: InputDecoration(hintText: 'Nama Barang'),
+              ),
+              TextField(
+                controller: txtjlh_brg,
+                decoration: InputDecoration(hintText: 'Jumlah Barang'),
+              ),
+              TextField(
+                controller: txtharga_barang,
+                decoration: InputDecoration(hintText: 'Harga Barang'),
+              ),
+              Divider(height: 5.0),
+              ElevatedButton(child: Text("Tambah"), onPressed: onTambah),
+            ],
+          ),
+        ),
+        new Column(
+          children: data,
+        )
+      ],
+    );
+  }
+}
